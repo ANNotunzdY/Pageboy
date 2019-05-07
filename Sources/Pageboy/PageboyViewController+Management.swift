@@ -200,7 +200,7 @@ internal extension PageboyViewController {
         #if swift(>=4.2)
         addChild(pageViewController)
         #else
-        addChildViewController(pageViewController)
+        addChild(pageViewController)
         #endif
         if let existingZIndex = existingZIndex {
             view.insertSubview(pageViewController.view, at: existingZIndex)
@@ -209,14 +209,14 @@ internal extension PageboyViewController {
             #if swift(>=4.2)
             view.sendSubviewToBack(pageViewController.view)
             #else
-            view.sendSubview(toBack: pageViewController.view)
+            view.sendSubviewToBack(pageViewController.view)
             #endif
         }
         pageViewController.view.pinToSuperviewEdges()
         #if swift(>=4.2)
         pageViewController.didMove(toParent: self)
         #else
-        pageViewController.didMove(toParentViewController: self)
+        pageViewController.didMove(toParent: self)
         #endif
         
         pageViewController.scrollView?.delegate = self
@@ -233,7 +233,7 @@ internal extension PageboyViewController {
         #if swift(>=4.2)
         pageViewController?.removeFromParent()
         #else
-        pageViewController?.removeFromParentViewController()
+        pageViewController?.removeFromParent()
         #endif
         pageViewController = nil
     }
@@ -266,7 +266,7 @@ internal extension PageboyViewController {
         var options = [String: Any]()
         
         if interPageSpacing > 0.0 {
-            options[UIPageViewControllerOptionInterPageSpacingKey] = interPageSpacing
+            options[convertFromUIPageViewControllerOptionsKey(UIPageViewController.OptionsKey.interPageSpacing)] = interPageSpacing
         }
         
         guard !options.isEmpty else {
@@ -311,4 +311,9 @@ extension PageboyViewController: UIPageViewControllerDataSource {
         }
         return nil
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIPageViewControllerOptionsKey(_ input: UIPageViewController.OptionsKey) -> String {
+	return input.rawValue
 }

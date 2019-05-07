@@ -87,11 +87,16 @@ internal class TransitionOperation: NSObject, CAAnimationDelegate {
         animation.endProgress = 1.0
         animation.configure(from: transition)
 
-        animation.subtype = action.transitionSubType
+        #if os(iOS)
+        animation.subtype = convertToOptionalCATransitionSubtype(action.transitionSubType.rawValue)
+        #endif
+        
         #if swift(>=4.2)
         animation.fillMode = .backwards
         #else
-        animation.fillMode = kCAFillModeBackwards
+        #if os(iOS)
+        animation.fillMode = CAMediaTimingFillMode.backwards
+        #endif
         #endif
         self.animation = animation
         
@@ -140,3 +145,11 @@ internal class TransitionOperation: NSObject, CAAnimationDelegate {
         animation = nil
     }
 }
+
+// Helper function inserted by Swift 4.2 migrator.
+#if os(iOS)
+fileprivate func convertToOptionalCATransitionSubtype(_ input: String?) -> CATransitionSubtype? {
+	guard let input = input else { return nil }
+	return CATransitionSubtype(rawValue: input)
+}
+#endif

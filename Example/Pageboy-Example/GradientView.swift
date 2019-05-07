@@ -70,8 +70,8 @@ import UIKit
             animation.fillMode = .forwards
             animation.timingFunction = CAMediaTimingFunction(name: .linear)
             #else
-            animation.fillMode = kCAFillModeForwards
-            animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            animation.fillMode = CAMediaTimingFillMode.forwards
+            animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
             #endif
             gradientLayer?.add(animation, forKey: "colors")
         }

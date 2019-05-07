@@ -22,9 +22,10 @@ internal extension TransitionOperation {
         /// The semantic direction of travel. In RtL languages,
         /// this will be the opposite of direction on the horizontal axis.
         let semanticDirection: NavigationDirection
+        #if os(iOS)
         /// The orientation of the page view controller.
         let orientation: UIPageViewController.NavigationOrientation
-        
+        #endif
     }
 }
 
@@ -60,26 +61,37 @@ internal extension TransitionOperation.Action {
     #else
     /// Animation sub-type for the action.
     var transitionSubType: String {
+        #if os(iOS)
         switch orientation {
             
         case .horizontal:
             switch semanticDirection {
                 
             case .reverse:
-                return kCATransitionFromLeft
+                return convertFromCATransitionSubtype(CATransitionSubtype.fromLeft)
             default:
-                return kCATransitionFromRight
+                return convertFromCATransitionSubtype(CATransitionSubtype.fromRight)
             }
             
         case .vertical:
             switch semanticDirection {
                 
             case .reverse:
-                return kCATransitionFromBottom
+                return convertFromCATransitionSubtype(CATransitionSubtype.fromBottom)
             default:
-                return kCATransitionFromTop
+                return convertFromCATransitionSubtype(CATransitionSubtype.fromTop)
             }
         }
+        #else
+        return ""
+        #endif
     }
     #endif
 }
+
+#if os(iOS)
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATransitionSubtype(_ input: CATransitionSubtype) -> String {
+	return input.rawValue
+}
+#endif

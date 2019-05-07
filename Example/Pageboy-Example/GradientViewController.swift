@@ -38,11 +38,11 @@ class GradientViewController: UIViewController {
         return children.first
     }
     #else
-    override var childViewControllerForStatusBarStyle: UIViewController? {
-        return childViewControllers.first
+    override var childForStatusBarStyle: UIViewController? {
+        return children.first
     }
-    override var childViewControllerForStatusBarHidden: UIViewController? {
-        return childViewControllers.first
+    override var childForStatusBarHidden: UIViewController? {
+        return children.first
     }
     #endif
     

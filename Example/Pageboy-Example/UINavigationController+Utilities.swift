@@ -19,11 +19,11 @@ extension UINavigationController {
         return topViewController
     }
     #else
-    open override var childViewControllerForStatusBarStyle: UIViewController? {
+    open override var childForStatusBarStyle: UIViewController? {
         return topViewController
     }
     
-    open override var childViewControllerForStatusBarHidden: UIViewController? {
+    open override var childForStatusBarHidden: UIViewController? {
         return topViewController
     }
     #endif
